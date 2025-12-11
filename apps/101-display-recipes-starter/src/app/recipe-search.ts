@@ -5,67 +5,15 @@ import { createRecipe, Recipe } from './recipe';
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
   static override styles = css`
-    :host {
-      display: block;
-      margin: auto;
-    }
-
-    .title {
+    .greetings {
+      margin: 0;
+      width: 100vw;
+      line-height: 100vh;
       text-align: center;
+      font-size: 20vh;
+
+      background: linear-gradient(135deg, #a4508b 0%, #5f0a87 100%);
       color: white;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      margin: 0;
-      width: 100%;
-      line-height: 80px;
-    }
-
-    .recipe-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .recipe {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      margin: 1rem auto;
-      max-width: 400px;
-      overflow: hidden;
-    }
-
-    .image {
-      max-height: 150px;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    .content {
-      padding: 1rem;
-    }
-
-    .name {
-      margin: 0;
-      text-align: center;
-    }
-
-    .description {
-      color: #444;
-    }
-
-    .ingredients {
-      color: #555;
-      font-size: 0.9em;
-    }
-
-    .steps {
-      color: #555;
-      font-size: 0.9em;
-    }
-
-    .section-title {
-      color: #444;
-      font-size: 0.9em;
-      font-weight: italic;
     }
   `;
 
@@ -112,37 +60,6 @@ export class RecipeSearch extends LitElement {
   ];
 
   protected override render() {
-    return html`<h1 class="title">Recipe Search</h1>
-      <ul class="recipe-list">
-        ${this._recipes.map(
-          (recipe) => html`
-            <li class="recipe">
-              <div>
-                <img
-                  class="image"
-                  src="${recipe.pictureUri}"
-                  alt="Picture of
-                ${recipe.name}"
-                />
-                <div class="content">
-                  <h2 class="name">${recipe.name}</h2>
-                  <p class="description">${recipe.description}</p>
-                  <ul class="ingredients">
-                    ${recipe.ingredients.map(
-                      (ingredient) => html`<li>
-                        ${ingredient.quantity
-                          ? html`${ingredient.quantity.amount}
-                            ${ingredient.quantity.unit} `
-                          : nothing}
-                        ${ingredient.name}
-                      </li>`
-                    )}
-                  </ul>
-                </div>
-              </div>
-            </li>
-          `
-        )}
-      </ul>`;
+    return html`<h1 class="greetings">👨🏻‍🍳 Let's cook!</h1>`;
   }
 }

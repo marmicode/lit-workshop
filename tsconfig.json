@@ -5,6 +5,9 @@
   "references": [
     {
       "path": "./apps/101-display-recipes-starter"
+    },
+    {
+      "path": "./apps/101-display-recipes-solution"
     }
   ]
 }

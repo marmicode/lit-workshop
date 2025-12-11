@@ -1,4 +1,2 @@
-packages:
-  - 'packages/*'
-  - 'apps/101-display-recipes-starter'
-autoInstallPeers: true
+ignoredBuiltDependencies:
+  - esbuild

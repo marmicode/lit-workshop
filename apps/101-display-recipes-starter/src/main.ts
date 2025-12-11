@@ -1,1 +1,1 @@
-document.body.textContent = 'Hello World';
+import './app/recipe-search';

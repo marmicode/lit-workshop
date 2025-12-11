@@ -12,11 +12,6 @@ export default defineConfig(() => ({
     port: 4300,
     host: 'localhost',
   },
-  plugins: [],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [],
-  // },
   build: {
     outDir: './dist',
     emptyOutDir: true,
@@ -24,6 +19,13 @@ export default defineConfig(() => ({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+  },
+  esbuild: {
+    /* Default target is esnext.
+     * We have to downgrade to es2024 to transform native decorators
+     * in case we want to give it a try, even though we will be using
+     * Typescript decorators instead. */
+    target: 'es2024',
   },
   test: {
     name: '101-display-recipes-starter',

@@ -1,5 +1,5 @@
-import { css, html, LitElement, nothing } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html, LitElement, nothing, PropertyValues } from 'lit';
+import { customElement, query, state } from 'lit/decorators.js';
 import { createRecipe, Recipe } from './recipe';
 
 @customElement('wm-recipe-search')
@@ -8,6 +8,42 @@ export class RecipeSearch extends LitElement {
     :host {
       display: block;
       margin: auto;
+    }
+
+    .search-form {
+      display: flex;
+      max-width: 400px;
+      margin: 1rem auto;
+
+      input {
+        flex: 1;
+        border: 1px solid #ccc;
+        border-radius: 8px 0 0 8px;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+          border-color: #667eea;
+          box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15);
+          background: #fff;
+        }
+      }
+
+      button {
+        border: 1px solid #ccc;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:hover {
+          border-color: #999;
+        }
+      }
     }
 
     .title {
@@ -69,6 +105,11 @@ export class RecipeSearch extends LitElement {
     }
   `;
 
+  @query('input[name="keywords"]')
+  private _searchInput?: HTMLInputElement;
+
+  @state()
+  private _keywords?: string;
   private _recipes: Recipe[] = [
     createRecipe({
       id: 'rec_burger',
@@ -111,10 +152,29 @@ export class RecipeSearch extends LitElement {
     }),
   ];
 
+  @state()
+  private _filteredRecipes: Recipe[] = this._recipes;
+
   protected override render() {
     return html`<h1 class="title">Recipe Search</h1>
+      <form
+        class="search-form"
+        @input=${() => this._updateKeywords()}
+        @submit=${(event: SubmitEvent) => {
+          event.preventDefault();
+          this._updateKeywords();
+        }}
+      >
+        <input
+          class="search-input"
+          name="keywords"
+          placeholder="Search recipes"
+          type="text"
+        />
+        <button type="submit">🔍</button>
+      </form>
       <ul class="recipe-list">
-        ${this._recipes.map(
+        ${this._filteredRecipes.map(
           (recipe) => html`
             <li class="recipe">
               <div>
@@ -144,5 +204,21 @@ export class RecipeSearch extends LitElement {
           `
         )}
       </ul>`;
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('_keywords')) {
+      this._filteredRecipes = this._recipes.filter((recipe) => {
+        if (!this._keywords) {
+          return true;
+        }
+        return recipe.name.toLowerCase().includes(this._keywords.toLowerCase());
+      });
+    }
+    super.willUpdate(changedProperties);
+  }
+
+  private _updateKeywords() {
+    this._keywords = this._searchInput?.value;
   }
 }

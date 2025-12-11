@@ -19,6 +19,12 @@ export class RecipeSearch extends LitElement {
       line-height: 80px;
     }
 
+    .search-form {
+      display: flex;
+      justify-content: center;
+      margin: 1rem auto;
+    }
+
     .recipe-list {
       list-style: none;
       padding: 0;
@@ -113,6 +119,12 @@ export class RecipeSearch extends LitElement {
 
   protected override render() {
     return html`<h1 class="title">Recipe Search</h1>
+
+      <form class="search-form">
+        <input name="keywords" placeholder="Search recipes" type="text" />
+        <button type="submit">🔍</button>
+      </form>
+
       <ul class="recipe-list">
         ${this._recipes.map(
           (recipe) => html`

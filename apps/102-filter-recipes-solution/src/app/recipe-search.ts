@@ -157,6 +157,7 @@ export class RecipeSearch extends LitElement {
 
   protected override render() {
     return html`<h1 class="title">Recipe Search</h1>
+
       <form
         class="search-form"
         @input=${() => this._updateKeywords()}
@@ -173,6 +174,7 @@ export class RecipeSearch extends LitElement {
         />
         <button type="submit">🔍</button>
       </form>
+
       <ul class="recipe-list">
         ${this._filteredRecipes.map(
           (recipe) => html`

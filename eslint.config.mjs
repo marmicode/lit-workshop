@@ -1,9 +1,11 @@
 import nx from '@nx/eslint-plugin';
+import lit from 'eslint-plugin-lit';
 
 export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
+  lit.configs['flat/all'],
   {
     ignores: [
       '**/dist',
@@ -15,6 +17,7 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
+      'lit/no-template-map': 'off',
       '@nx/enforce-module-boundaries': [
         'error',
         {

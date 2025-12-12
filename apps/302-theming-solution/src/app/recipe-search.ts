@@ -1,5 +1,6 @@
 import { css, html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import './color-scheme-toggle';
 import { createRecipe, Recipe } from './recipe';
 import './recipe-filter';
 import {
@@ -10,7 +11,6 @@ import './recipe-preview';
 import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
 import './selector';
 import { SelectorChange } from './selector';
-
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
   static override styles = css`
@@ -26,6 +26,11 @@ export class RecipeSearch extends LitElement {
     .title {
       color: white;
       margin: 0;
+    }
+
+    .color-scheme-toggle {
+      position: absolute;
+      right: 1rem;
     }
 
     .recipe-list {
@@ -92,6 +97,9 @@ export class RecipeSearch extends LitElement {
   protected override render() {
     return html`<header class="toolbar">
         <h1 class="title">Recipe Search</h1>
+        <!-- <wm-color-scheme-toggle
+          class="color-scheme-toggle"
+        ></wm-color-scheme-toggle> -->
       </header>
 
       <wm-recipe-filter

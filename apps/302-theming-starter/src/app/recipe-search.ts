@@ -1,5 +1,6 @@
 import { css, html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import './color-scheme-toggle';
 import { createRecipe, Recipe } from './recipe';
 import './recipe-filter';
 import {
@@ -26,6 +27,11 @@ export class RecipeSearch extends LitElement {
     .title {
       color: white;
       margin: 0;
+    }
+
+    .color-scheme-toggle {
+      position: absolute;
+      right: 1rem;
     }
 
     .recipe-list {

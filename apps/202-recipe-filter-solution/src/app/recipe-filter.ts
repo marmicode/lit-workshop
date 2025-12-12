@@ -9,35 +9,40 @@ export class RecipeFilter extends LitElement {
     }
 
     .search-form {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 50px;
       max-width: 600px;
       margin: 1rem auto;
+      padding: 0 0.5rem;
 
       input {
-        flex: 1;
+        min-width: 100px;
         border: 1px solid #ccc;
-        border-left: none;
         font-size: 1rem;
+        line-height: 1.5rem;
         padding: 0.5rem 1rem;
         outline: none;
         transition: border-color 0.2s, box-shadow 0.2s;
 
-        &:first-child {
-          border-radius: 8px 0 0 8px;
-          border-left: 1px solid #ccc;
+        &[name='keywords'] {
+          border-radius: 8px 8px 0 0;
+          border-bottom: none;
+          grid-column: 1 / -1;
         }
 
-        &:focus {
-          border-color: #667eea;
-          box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15);
-          background: #fff;
+        &[name='maxIngredients'] {
+          border-radius: 0 0 0 8px;
+          border-right: none;
+        }
+
+        &[name='maxSteps'] {
+          border-right: none;
         }
       }
 
       button {
         border: 1px solid #ccc;
-        border-left: none;
-        border-radius: 0 8px 8px 0;
+        border-radius: 0 0 8px 0;
         padding: 0.5rem 1rem;
         font-size: 1rem;
         cursor: pointer;

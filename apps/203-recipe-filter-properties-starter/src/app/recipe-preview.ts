@@ -1,6 +1,5 @@
 import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { Recipe } from './recipe';
 
 @customElement('wm-recipe-preview')
@@ -54,20 +53,24 @@ export class RecipePreview extends LitElement {
   recipe?: Recipe;
 
   protected override render() {
+    if (!this.recipe) {
+      return;
+    }
+
     return html`
       <li class="recipe">
         <div>
           <img
             class="image"
-            src="${ifDefined(this.recipe?.pictureUri)}"
+            src="${this.recipe.pictureUri}"
             alt="Picture of
-                ${ifDefined(this.recipe?.name)}"
+                ${this.recipe.name}"
           />
           <div class="content">
-            <h2 class="name">${this.recipe?.name}</h2>
-            <p class="description">${this.recipe?.description}</p>
+            <h2 class="name">${this.recipe.name}</h2>
+            <p class="description">${this.recipe.description}</p>
             <ul class="ingredients">
-              ${this.recipe?.ingredients.map(
+              ${this.recipe.ingredients.map(
                 (ingredient) => html`<li>
                   ${ingredient.quantity
                     ? html`${ingredient.quantity.amount}

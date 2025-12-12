@@ -108,7 +108,7 @@ export class RecipeFilter extends LitElement {
     const maxIngredients = _inputValueAsNumber(this._maxIngredientsInput);
     const maxSteps = _inputValueAsNumber(this._maxStepsInput);
     this.dispatchEvent(
-      new RecipeFilterChange(
+      new RecipeFilterCriteriaChange(
         createRecipeFilterCriteria({ keywords, maxIngredients, maxSteps })
       )
     );
@@ -123,10 +123,10 @@ function _inputValueAsNumber(input?: HTMLInputElement) {
   return value;
 }
 
-export class RecipeFilterChange extends Event {
+export class RecipeFilterCriteriaChange extends Event {
   criteria: RecipeFilterCriteria;
   constructor(criteria: RecipeFilterCriteria) {
-    super('recipe-filter-change');
+    super('criteria-change');
     this.criteria = criteria;
   }
 }

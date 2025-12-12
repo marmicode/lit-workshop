@@ -3,7 +3,10 @@ import { customElement, state } from 'lit/decorators.js';
 import { createRecipe, Recipe } from './recipe';
 import './recipe-filter';
 import './recipe-preview';
-import { RecipeFilterChange, RecipeFilterCriteria } from './recipe-filter';
+import {
+  RecipeFilterCriteriaChange,
+  RecipeFilterCriteria,
+} from './recipe-filter';
 
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
@@ -75,7 +78,7 @@ export class RecipeSearch extends LitElement {
 
       <wm-recipe-filter
         .criteria=${this._criteria}
-        @recipe-filter-change=${({ criteria }: RecipeFilterChange) => {
+        @criteria-change=${({ criteria }: RecipeFilterCriteriaChange) => {
           this._criteria = criteria;
         }}
       ></wm-recipe-filter>

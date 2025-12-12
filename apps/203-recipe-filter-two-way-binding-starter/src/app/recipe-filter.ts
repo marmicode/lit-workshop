@@ -4,10 +4,6 @@ import { customElement, query } from 'lit/decorators.js';
 @customElement('wm-recipe-filter')
 export class RecipeFilter extends LitElement {
   static override styles = css`
-    :host {
-      display: block;
-    }
-
     .search-form {
       display: grid;
       grid-template-columns: 1fr 1fr 50px;

@@ -1,4 +1,4 @@
-import { css, html, LitElement, PropertyValues } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
@@ -49,28 +49,23 @@ export class Selector<T extends string> extends LitElement {
   @property()
   value?: T;
 
-  private _enrichedOptions: Array<{ value: T; onClick: () => void }> = [];
-
   protected override render() {
-    return this._enrichedOptions.map(
+    /* Disable lint rule as performance impact is negligible
+     * compare to the effort of preparing a callback list.
+     * e.g. attaching/removing callbacks is barely 10x slower than `toUpperCase()`. */
+
+    /* eslint-disable lit/no-template-arrow */
+    return this.options.map(
       (option) => html`
         <button
-          @click=${option.onClick}
-          ?disabled=${this.value === option.value}
+          @click=${() => this.dispatchEvent(new SelectorChange(option))}
+          ?disabled=${this.value === option}
         >
-          ${option.value.toUpperCase()}
+          ${option.toUpperCase()}
         </button>
       `
     );
-  }
-
-  protected override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('options')) {
-      this._enrichedOptions = this.options.map((option) => ({
-        value: option,
-        onClick: () => this.dispatchEvent(new SelectorChange(option)),
-      }));
-    }
+    /* eslint-enable lit/no-template-arrow */
   }
 }
 

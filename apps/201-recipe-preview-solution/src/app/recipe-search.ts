@@ -6,11 +6,6 @@ import './recipe-preview';
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
   static override styles = css`
-    :host {
-      display: block;
-      margin: auto;
-    }
-
     .search-form {
       display: flex;
       max-width: 400px;

@@ -5,11 +5,6 @@ import { createRecipe, Recipe } from './recipe';
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
   static override styles = css`
-    :host {
-      display: block;
-      margin: auto;
-    }
-
     .title {
       text-align: center;
       color: white;

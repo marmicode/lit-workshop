@@ -98,6 +98,9 @@ export class RecipeSearch extends LitElement {
   protected override render() {
     return html`<header class="toolbar">
         <h1 class="title">Recipe Search</h1>
+        <wm-color-scheme-toggle
+          class="color-scheme-toggle"
+        ></wm-color-scheme-toggle>
       </header>
 
       <wm-recipe-filter
@@ -123,7 +126,9 @@ export class RecipeSearch extends LitElement {
   }
 
   protected override willUpdate(
-    changedProperties: PropertyValues<{ _criteria?: RecipeFilterCriteria }>
+    changedProperties: PropertyValues<{
+      _criteria?: RecipeFilterCriteria;
+    }>
   ): void {
     if (changedProperties.has('_criteria')) {
       this._updatedFilteredRecipes();

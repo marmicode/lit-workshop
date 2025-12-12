@@ -1,13 +1,7 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ColorScheme } from './color-scheme';
 
-/**
- * @fires color-scheme-change - Emitted when the scheme changes
- *
- * @property {ColorScheme} colorScheme - The current color scheme
- */
 @customElement('wm-color-scheme-toggle')
 export class ColorSchemeToggle extends LitElement {
   static override styles = css`
@@ -45,27 +39,32 @@ export class ColorSchemeToggle extends LitElement {
     }
   `;
 
-  @property({ attribute: 'color-scheme' })
-  colorScheme: ColorScheme = 'light';
+  @state()
+  private _colorScheme: ColorScheme = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  ).matches
+    ? 'dark'
+    : 'light';
 
   protected override render() {
-    const dark = this.colorScheme === 'dark';
+    const dark = this._colorScheme === 'dark';
     const icon = dark ? '🌙' : '☀️';
     return html`<button class="toggle" @click=${this._toggleColorScheme}>
       <span class=${classMap({ 'toggle-slider': true, dark })}>${icon}</span>
     </button>`;
   }
 
+  protected override willUpdate(
+    changedProperties: PropertyValues<{ _colorScheme?: ColorScheme }>
+  ): void {
+    if (changedProperties.has('_colorScheme')) {
+      document.body.style.colorScheme = this._colorScheme;
+    }
+  }
+
   private _toggleColorScheme() {
-    this.colorScheme = this.colorScheme === 'light' ? 'dark' : 'light';
-    this.dispatchEvent(new ColorSchemeToggleChange(this.colorScheme));
+    this._colorScheme = this._colorScheme === 'light' ? 'dark' : 'light';
   }
 }
 
-export class ColorSchemeToggleChange extends Event {
-  colorScheme: ColorScheme;
-  constructor(colorScheme: ColorScheme) {
-    super('color-scheme-change');
-    this.colorScheme = colorScheme;
-  }
-}
+export type ColorScheme = 'light' | 'dark';

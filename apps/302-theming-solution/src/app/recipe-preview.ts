@@ -15,9 +15,10 @@ export class RecipePreview extends LitElement {
     }
 
     .recipe {
+      background-color: light-dark(white, #555);
       border: 1px solid #ddd;
       border-radius: 12px;
-      color: #444;
+      color: light-dark(#444, white);
       margin: 1rem auto;
       max-width: 400px;
       overflow: hidden;
@@ -38,12 +39,12 @@ export class RecipePreview extends LitElement {
     }
 
     .ingredients {
-      color: #555;
+      color: light-dark(#555, white);
       font-size: 0.9em;
     }
 
     .steps {
-      color: #555;
+      color: light-dark(#555, white);
       font-size: 0.9em;
     }
 

@@ -29,9 +29,9 @@ export class ColorSchemeToggle extends LitElement {
       height: 28px;
       line-height: 30px;
 
-      background: white;
+      background: light-dark(white, #444);
       border-radius: 50%;
-      transition: transform 0.3s ease-in-out;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
       &.dark {
         transform: translateX(28px);

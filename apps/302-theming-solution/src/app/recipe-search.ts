@@ -40,7 +40,7 @@ export class RecipeSearch extends LitElement {
     }
 
     wm-recipe-preview::part(name) {
-      color: #59258c;
+      color: light-dark(#59258c, white);
       font-family: Cursive;
     }
   `;

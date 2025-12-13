@@ -18,9 +18,8 @@ export class Selector<T extends string> extends LitElement {
     button {
       padding: 0.5rem 1rem;
 
-      background: transparent;
+      background: light-dark(white, #333);
       border: 1px solid #ccc;
-      border-right: none;
       cursor: pointer;
       font-size: 1rem;
       transition: background-color 0.2s, border-color 0.2s;
@@ -37,7 +36,6 @@ export class Selector<T extends string> extends LitElement {
       }
 
       &:last-child {
-        border-right: 1px solid #ccc;
         border-radius: 0 8px 8px 0;
       }
     }

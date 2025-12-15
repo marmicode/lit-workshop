@@ -1,8 +1,7 @@
-import { css, html, LitElement, PropertyValues } from 'lit';
+import { Task } from '@lit/task';
+import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 import './color-scheme-toggle';
-import { Recipe } from './recipe';
 import './recipe-filter';
 import { RecipeFilterCriteriaChange } from './recipe-filter';
 import { RecipeFilterCriteria } from './recipe-filter-criteria';
@@ -28,6 +27,7 @@ export class RecipeSearch extends LitElement {
       width: 100%;
     }
 
+    .loading,
     .error {
       text-align: center;
       color: var(--text-color);
@@ -58,15 +58,13 @@ export class RecipeSearch extends LitElement {
   private _criteria?: RecipeFilterCriteria;
 
   @state()
-  private _error?: unknown;
-
-  @state()
-  private _recipes: Recipe[] = [];
-
-  @state()
   private _recipePreviewMode: RecipePreviewMode = 'detailed';
 
-  private _abortController?: AbortController;
+  private _task = new Task(this, {
+    args: () => [this._criteria],
+    task: ([criteria], { signal }) =>
+      recipeRepository.searchRecipes(criteria, { signal }),
+  });
 
   protected override render() {
     return html`<header class="toolbar">
@@ -79,6 +77,7 @@ export class RecipeSearch extends LitElement {
       <wm-recipe-filter
         .criteria=${this._criteria}
         @criteria-change=${this._handleCriteriaChange}
+        @criteria-submit=${this._fetchRecipes}
       ></wm-recipe-filter>
 
       <wm-selector
@@ -87,51 +86,23 @@ export class RecipeSearch extends LitElement {
         @value-change=${this._handleRecipePreviewModeChange}
       ></wm-selector>
 
-      ${when(
-        this._error,
-        () => html`<div class="error" role="alert">
+      ${this._task.render({
+        pending: () => html`<div class="loading">Loading...</div>`,
+        complete: (recipes) => html`<ul class="recipe-list">
+          ${recipes.map(
+            (recipe) =>
+              html`<wm-recipe-preview
+                .mode=${this._recipePreviewMode}
+                .recipe=${recipe}
+              ></wm-recipe-preview>`
+          )}
+        </ul>`,
+        error: () => html`<div class="error" role="alert">
           <img src="https://marmicode.io/assets/error.gif" alt="Error" />
           <p>Oups, something went wrong.</p>
           <button @click=${this._fetchRecipes}>RETRY</button>
         </div>`,
-        () =>
-          html`<ul class="recipe-list">
-            ${this._recipes.map(
-              (recipe) =>
-                html`<wm-recipe-preview
-                  .mode=${this._recipePreviewMode}
-                  .recipe=${recipe}
-                ></wm-recipe-preview>`
-            )}
-          </ul>`
-      )}
-
-      <ul class="recipe-list">
-        ${this._recipes.map(
-          (recipe) =>
-            html`<wm-recipe-preview
-              .mode=${this._recipePreviewMode}
-              .recipe=${recipe}
-            ></wm-recipe-preview>`
-        )}
-      </ul>`;
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this._fetchRecipes();
-  }
-
-  protected override willUpdate(
-    changedProperties: PropertyValues<{
-      _criteria?: RecipeFilterCriteria;
-    }>
-  ): void {
-    if (changedProperties.has('_criteria')) {
-      this._fetchRecipes();
-    }
-
-    super.willUpdate(changedProperties);
+      })} `;
   }
 
   private _handleCriteriaChange(event: RecipeFilterCriteriaChange) {
@@ -145,19 +116,6 @@ export class RecipeSearch extends LitElement {
   }
 
   private async _fetchRecipes() {
-    this._abortController?.abort();
-    this._abortController = new AbortController();
-
-    try {
-      this._recipes = await recipeRepository.searchRecipes(this._criteria, {
-        signal: this._abortController.signal,
-      });
-      this._error = undefined;
-    } catch (error) {
-      this._recipes = [];
-      this._error = error;
-    } finally {
-      this._abortController = undefined;
-    }
+    await this._task.run();
   }
 }

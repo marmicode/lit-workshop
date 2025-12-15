@@ -68,6 +68,7 @@ export class RecipeSearch extends LitElement {
       <wm-recipe-filter
         .criteria=${this._criteria}
         @criteria-change=${this._handleCriteriaChange}
+        @criteria-submit=${this._fetchRecipes}
       ></wm-recipe-filter>
 
       <wm-selector

@@ -56,6 +56,12 @@
     },
     {
       "path": "./apps/402-handle-errors-starter"
+    },
+    {
+      "path": "./apps/403-cancel-request-solution"
+    },
+    {
+      "path": "./apps/403-cancel-request-starter"
     }
   ]
 }

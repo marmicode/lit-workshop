@@ -1,5 +1,6 @@
 import { css, html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import './color-scheme-toggle';
 import { Recipe } from './recipe';
 import './recipe-filter';
@@ -25,6 +26,11 @@ export class RecipeSearch extends LitElement {
       );
       height: 80px;
       width: 100%;
+    }
+
+    .error {
+      text-align: center;
+      color: var(--text-color);
     }
 
     .title {
@@ -57,6 +63,8 @@ export class RecipeSearch extends LitElement {
   @state()
   private _recipePreviewMode: RecipePreviewMode = 'detailed';
 
+  private _error?: unknown;
+
   protected override render() {
     return html`<header class="toolbar">
         <h1 class="title">Recipe Search</h1>
@@ -75,6 +83,24 @@ export class RecipeSearch extends LitElement {
         .value=${this._recipePreviewMode}
         @value-change=${this._handleRecipePreviewModeChange}
       ></wm-selector>
+
+      ${when(
+        this._error,
+        () => html`<div class="error" role="alert">
+          <img src="https://marmicode.io/assets/error.gif" alt="Error" />
+          <p>Oups, something went wrong.</p>
+        </div>`,
+        () =>
+          html`<ul class="recipe-list">
+            ${this._recipes.map(
+              (recipe) =>
+                html`<wm-recipe-preview
+                  .mode=${this._recipePreviewMode}
+                  .recipe=${recipe}
+                ></wm-recipe-preview>`
+            )}
+          </ul>`
+      )}
 
       <ul class="recipe-list">
         ${this._recipes.map(
@@ -118,7 +144,8 @@ export class RecipeSearch extends LitElement {
     try {
       this._recipes = await recipeRepository.searchRecipes(this._criteria);
     } catch (error) {
-      console.error(error);
+      this._error = error;
+      this._recipes = [];
     }
   }
 }

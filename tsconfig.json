@@ -50,6 +50,12 @@
     },
     {
       "path": "./apps/401-fetch-recipes-starter"
+    },
+    {
+      "path": "./apps/402-handle-errors-solution"
+    },
+    {
+      "path": "./apps/402-handle-errors-starter"
     }
   ]
 }

@@ -3,7 +3,8 @@ import { RecipeFilterCriteria } from './recipe-filter-criteria';
 
 export class RecipeRepository {
   async searchRecipes(
-    filterCriteria: RecipeFilterCriteria = {}
+    filterCriteria: RecipeFilterCriteria = {},
+    { signal }: { signal?: AbortSignal } = {}
   ): Promise<Recipe[]> {
     const url = new URL('https://recipes-api.marmicode.io/recipes');
     url.searchParams.set('embed', 'ingredients,steps');
@@ -20,7 +21,7 @@ export class RecipeRepository {
       url.searchParams.set('maxSteps', filterCriteria.maxSteps.toString());
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, { signal });
     const data: RecipeListResponseDto = await response.json();
     return data.items.map((item) => ({
       id: item.id,

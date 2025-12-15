@@ -66,6 +66,8 @@ export class RecipeSearch extends LitElement {
   @state()
   private _recipePreviewMode: RecipePreviewMode = 'detailed';
 
+  private _abortController?: AbortController;
+
   protected override render() {
     return html`<header class="toolbar">
         <h1 class="title">Recipe Search</h1>
@@ -142,11 +144,18 @@ export class RecipeSearch extends LitElement {
   }
 
   private async _fetchRecipes() {
+    this._abortController?.abort();
+    this._abortController = new AbortController();
+
     try {
-      this._recipes = await recipeRepository.searchRecipes(this._criteria);
+      this._recipes = await recipeRepository.searchRecipes(this._criteria, {
+        signal: this._abortController.signal,
+      });
     } catch (error) {
       this._error = error;
       this._recipes = [];
+    } finally {
+      this._abortController = undefined;
     }
   }
 }

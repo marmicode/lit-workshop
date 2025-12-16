@@ -48,7 +48,6 @@ import './recipe-preview';
 
 - [Components](https://lit.dev/docs/components/overview/)
 - [Properties](https://lit.dev/docs/components/properties/)
-- [Property Decorator](https://lit.dev/docs/components/decorators/#property)
 - [Composition](https://lit.dev/docs/composition/overview/)
 
 ### Key Concepts

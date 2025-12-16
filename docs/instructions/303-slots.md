@@ -72,13 +72,6 @@ private _sayHi(event: MouseEvent) {
 
 ### Key Concepts
 
-**Slots:**
-
-- Allow parent components to inject content into child components
-- Part of the Web Components standard (Shadow DOM)
-- Enable content projection/transclusion
-- Make components more flexible and reusable
-
 **Named Slots:**
 
 - Use `name` attribute to create multiple slots
@@ -101,40 +94,6 @@ private _sayHi(event: MouseEvent) {
 </my-component>
 ```
 
-**Default vs Named Slots:**
-
-- Default slot: `<slot></slot>` (no name attribute)
-- Named slot: `<slot name="my-slot"></slot>`
-- Content without `slot` attribute goes to default slot
-- Content with `slot="my-slot"` goes to that named slot
-
-**Slot Rendering:**
-
-- Slotted content is rendered in the light DOM (parent's DOM)
-- But displayed in the shadow DOM (child's DOM) at the slot position
-- Slotted content uses parent's styles by default
-- Child can style slotted content using `::slotted()` selector
-
-**::slotted() Pseudo-element:**
-
-```css
-/* Inside child component styles */
-::slotted(button) {
-  background: blue;
-}
-
-/* Can only style direct children of slot */
-::slotted(.my-class) {
-  color: red;
-}
-```
-
-**Limitations:**
-
-- Can only style direct slot children, not descendants
-- `::slotted(button span)` won't work
-- Use CSS custom properties for deeper styling control
-
 **Data Attributes:**
 
 - Custom attributes prefixed with `data-`
@@ -149,58 +108,4 @@ private _sayHi(event: MouseEvent) {
 const button = element as HTMLButtonElement;
 const recipeId = button.dataset.recipeId; // "123"
 const action = button.dataset.action; // "add"
-```
-
-**Attribute naming:**
-
-- HTML: `data-recipe-id` (kebab-case)
-- JavaScript: `dataset.recipeId` (camelCase)
-- Automatically converted between formats
-
-**Benefits of Slots:**
-
-- Flexible component APIs
-- Parent controls content and behavior
-- Child provides structure and styling
-- Enables composition over configuration
-- Better than passing everything as properties
-
-**When to Use Slots:**
-
-- Complex content that varies by usage
-- HTML structure that needs to be customized
-- Buttons, links, or interactive elements
-- Rich formatting (bold, italic, etc.)
-
-**When to Use Properties:**
-
-- Simple data (strings, numbers, booleans)
-- Data that needs validation
-- Data that affects component logic
-- Primitive values
-
-**Slot Change Events:**
-
-- Listen to `slotchange` event to detect when slot content changes
-- Useful for components that need to react to content changes
-
-```ts
-<slot @slotchange=${this._handleSlotChange}></slot>
-```
-
-**Checking if Slot Has Content:**
-
-```ts
-const slot = this.shadowRoot?.querySelector('slot[name="actions"]');
-const hasContent = slot?.assignedNodes().length > 0;
-```
-
-**Fallback Content:**
-
-- Content inside `<slot>` tags is shown if nothing is slotted
-
-```html
-<slot name="actions">
-  <button>Default Action</button>
-</slot>
 ```

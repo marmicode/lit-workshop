@@ -14,6 +14,7 @@ sidebar_label: 401. Fetch Recipes from API
 
 ```sh
 pnpm cook start 401-fetch-recipes
+pnpm start
 ```
 
 ## 🎯 Goal: Fetch recipes from a REST API instead of using hardcoded data

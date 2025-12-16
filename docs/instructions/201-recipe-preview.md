@@ -8,6 +8,7 @@ sidebar_label: 201. Recipe Preview Component
 
 ```sh
 pnpm cook start 201-recipe-preview
+pnpm start
 ```
 
 ## 🎯 Goal: Extract recipe display logic into a reusable component

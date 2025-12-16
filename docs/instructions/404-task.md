@@ -14,6 +14,7 @@ sidebar_label: 404. Task Controller
 
 ```sh
 pnpm cook start 404-task
+pnpm start
 ```
 
 ## 🎯 Goal: Simplify async operations with Lit's Task controller

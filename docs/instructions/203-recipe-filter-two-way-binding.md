@@ -8,6 +8,7 @@ sidebar_label: 203. Two-Way Binding
 
 ```sh
 pnpm cook start 203-recipe-filter-two-way-binding
+pnpm start
 ```
 
 ## 🎯 Goal: Implement two-way data binding between parent and child

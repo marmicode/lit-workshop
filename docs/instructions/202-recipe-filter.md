@@ -8,6 +8,7 @@ sidebar_label: 202. Recipe Filter Component
 
 ```sh
 pnpm cook start 202-recipe-filter
+pnpm start
 ```
 
 ## 🎯 Goal: Extract filtering logic into a separate component with custom events

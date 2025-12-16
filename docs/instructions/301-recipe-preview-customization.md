@@ -14,6 +14,7 @@ sidebar_label: 301. Recipe Preview Customization
 
 ```sh
 pnpm cook start 301-recipe-preview-customization
+pnpm start
 ```
 
 ## 🎯 Goal: Add display mode selection and style customization

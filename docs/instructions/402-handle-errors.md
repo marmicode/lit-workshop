@@ -14,6 +14,7 @@ sidebar_label: 402. Handle Errors
 
 ```sh
 pnpm cook start 402-handle-errors
+pnpm start
 ```
 
 ## 🎯 Goal: Add error handling and display user-friendly error messages

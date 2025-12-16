@@ -14,6 +14,7 @@ sidebar_label: 403. Cancel Requests
 
 ```sh
 pnpm cook start 403-cancel-request
+pnpm start
 ```
 
 ## 🎯 Goal: Cancel in-flight requests to prevent race conditions

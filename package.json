@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "cook": "node --experimental-strip-types tools/cook/main.ts"
+    "cook": "node --experimental-strip-types tools/cook/main.ts",
+    "start": "nx dev"
   },
   "private": true,
   "dependencies": {

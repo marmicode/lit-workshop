@@ -14,6 +14,7 @@ sidebar_label: 302. Theming with CSS Custom Properties
 
 ```sh
 pnpm cook start 302-theming
+pnpm start
 ```
 
 ## 🎯 Goal: Implement theming with CSS custom properties and light-dark() function

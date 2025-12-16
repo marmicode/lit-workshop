@@ -14,6 +14,7 @@ sidebar_label: 101. Display Recipes
 
 ```sh
 pnpm cook start 101-display-recipes
+pnpm start
 ```
 
 ## 🎯 Goal: Display a list of recipes

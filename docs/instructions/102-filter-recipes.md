@@ -8,6 +8,7 @@ sidebar_label: 102. Filter Recipes
 
 ```sh
 pnpm cook start 102-filter-recipes
+pnpm start
 ```
 
 ## 🎯 Goal: Filter recipes based on search keywords

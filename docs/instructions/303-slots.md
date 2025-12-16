@@ -14,6 +14,7 @@ sidebar_label: 303. Slots
 
 ```sh
 pnpm cook start 303-slots
+pnpm start
 ```
 
 ## 🎯 Goal: Use slots to allow parent components to inject custom content

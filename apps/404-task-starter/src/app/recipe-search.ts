@@ -28,6 +28,7 @@ export class RecipeSearch extends LitElement {
       width: 100%;
     }
 
+    .loading,
     .error {
       text-align: center;
       color: var(--text-color);

@@ -46,26 +46,7 @@ The `_task` property does not need to be reactive. The `Task` controller will ha
 - `task` function receives args and options (including an abort signal)
 - Signal is automatically managed for request cancellation
 
-#### 3. Remove manual state management
-
-Delete these properties:
-
-```ts
-@state() private _error?: unknown;
-@state() private _recipes: Recipe[] = [];
-private _abortController?: AbortController;
-```
-
-#### 4. Remove lifecycle methods
-
-Delete these methods:
-
-- `connectedCallback()`
-- `willUpdate()`
-
-The task automatically runs when args change.
-
-#### 5. Update render method
+#### 3. Update render method
 
 Replace the manual conditional rendering with `task.render()`:
 
@@ -84,19 +65,26 @@ ${this._task.render({
 - `error(error)` receives any errors (though we don't use it here)
 - Task automatically shows the right state
 
-#### 6. Add loading styles
+#### 4. Remove manual state management
 
-Add styling for the loading state:
+Delete these properties:
 
-```css
-.loading,
-.error {
-  text-align: center;
-  color: var(--text-color);
-}
+```ts
+@state() private _error?: unknown;
+@state() private _recipes: Recipe[] = [];
+private _abortController?: AbortController;
 ```
 
-#### 7. Allow user to manually retry on submit
+#### 5. Remove lifecycle methods
+
+Delete these methods:
+
+- `connectedCallback()`
+- `willUpdate()`
+
+The task automatically runs when args change.
+
+#### 6. Allow user to manually retry on submit
 
 ```ts
 private async _fetchRecipes() {

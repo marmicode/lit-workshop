@@ -23,21 +23,7 @@ Your goal is to add a slot to the `RecipePreview` component that allows the pare
 
 ### 📝 Steps
 
-#### Part 1: Add a Named Slot to RecipePreview
-
-##### 1. Add slot styling
-
-In `recipe-preview.ts`, add styles for the actions slot:
-
-```css
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-```
-
-##### 2. Add the slot element
+#### 1. Add the slot element
 
 Add a named slot inside the `.content` div, after the ingredients:
 
@@ -45,23 +31,13 @@ Add a named slot inside the `.content` div, after the ingredients:
 <slot class="actions" name="actions"></slot>
 ```
 
-**Important:** Place it after the ingredients section, still inside the `.content` div.
-
-#### Part 2: Provide Slotted Content from Parent
-
-##### 1. Update RecipeSearch template
+#### 2. Update RecipeSearch template
 
 In `recipe-search.ts`, add a button inside the `<wm-recipe-preview>` element:
 
 ```html
 <wm-recipe-preview .mode="${this._recipePreviewMode}" .recipe="${recipe}">
-  <button
-    slot="actions"
-    data-recipe-id="${recipe.id}"
-    @click="${this._handleAddToMealPlanner}"
-  >
-    ADD
-  </button>
+  <button slot="actions">ADD</button>
 </wm-recipe-preview>
 ```
 
@@ -69,33 +45,30 @@ In `recipe-search.ts`, add a button inside the `<wm-recipe-preview>` element:
 
 - The button is now inside the component tag, not self-closing
 - `slot="actions"` tells the browser which slot to project into
-- `data-recipe-id=${recipe.id}` stores the recipe ID as a data attribute
-- The click handler will read this data attribute
 
-##### 2. Add the click handler
+#### 3. Add the click handler
 
-Add this method to the `RecipeSearch` class:
+Adding inline callbacks (e.g. `@click=${() => this._addToMealPlanner(recipe)}`) is not recommended as it can lead to performance issues. It will remove and re-register the callback on every render.
+
+A common pattern in Lit is to use a data attribute to store the recipe id and then use a method to handle the click event.
+
+```html
+<button data-user-name="${user.name}" @click="${this._sayHi}">ADD</button>
+```
 
 ```ts
-private _handleAddToMealPlanner(event: MouseEvent) {
-  const recipeId = (event.target as HTMLButtonElement).dataset.recipeId;
-  alert(`Adding recipe ${recipeId} to meal planner`);
+private _sayHi(event: MouseEvent) {
+  const userName = (event.target as HTMLButtonElement).dataset.userName;
+  alert(`Hello ${userName}!`);
 }
 ```
 
 ## 📖 Appendices
 
-### Lit Documentation
-
-- [Shadow DOM](https://lit.dev/docs/components/shadow-dom/)
-- [Slots](https://lit.dev/docs/components/shadow-dom/#slots)
-- [Named Slots](https://lit.dev/docs/components/shadow-dom/#named-slots)
-
-### MDN Documentation
-
-- [Using Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM)
-- [HTML slot element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)
-- [Data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
+- [Slots (Lit)](https://lit.dev/docs/components/shadow-dom/#slots)
+- [Named Slots (Lit)](https://lit.dev/docs/components/shadow-dom/#using-named-slots)
+- [HTML slot element (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)
+- [Data attributes (MDN)](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
 
 ### Key Concepts
 

@@ -94,7 +94,15 @@ export class RecipeSearch extends LitElement {
               html`<wm-recipe-preview
                 .mode=${this._recipePreviewMode}
                 .recipe=${recipe}
-              ></wm-recipe-preview>`
+              >
+                <button
+                  slot="actions"
+                  data-recipe-id=${recipe.id}
+                  @click=${this._handleAddToMealPlanner}
+                >
+                  ADD
+                </button>
+              </wm-recipe-preview>`
           )}
         </ul>`,
         error: () => html`<div class="error" role="alert">
@@ -103,6 +111,11 @@ export class RecipeSearch extends LitElement {
           <button @click=${this._fetchRecipes}>RETRY</button>
         </div>`,
       })} `;
+  }
+
+  private _handleAddToMealPlanner(event: MouseEvent) {
+    const recipeId = (event.target as HTMLButtonElement).dataset.recipeId;
+    alert(`Adding recipe ${recipeId} to meal planner`);
   }
 
   private _handleCriteriaChange(event: RecipeFilterCriteriaChange) {

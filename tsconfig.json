@@ -46,6 +46,12 @@
       "path": "./apps/302-theming-starter"
     },
     {
+      "path": "./apps/303-slots-solution"
+    },
+    {
+      "path": "./apps/303-slots-starter"
+    },
+    {
       "path": "./apps/401-fetch-recipes-solution"
     },
     {

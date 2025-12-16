@@ -122,7 +122,15 @@ export class RecipeSearch extends LitElement {
             html`<wm-recipe-preview
               .mode=${this._recipePreviewMode}
               .recipe=${recipe}
-            ></wm-recipe-preview>`
+            >
+              <button
+                slot="actions"
+                data-recipe-id=${recipe.id}
+                @click=${this._handleAddToMealPlanner}
+              >
+                ADD
+              </button>
+            </wm-recipe-preview>`
         )}
       </ul>`;
   }
@@ -137,6 +145,11 @@ export class RecipeSearch extends LitElement {
     }
 
     super.willUpdate(changedProperties);
+  }
+
+  private _handleAddToMealPlanner(event: MouseEvent) {
+    const recipeId = (event.target as HTMLButtonElement).dataset.recipeId;
+    alert(`Adding recipe ${recipeId} to meal planner`);
   }
 
   private _handleCriteriaChange(event: RecipeFilterCriteriaChange) {

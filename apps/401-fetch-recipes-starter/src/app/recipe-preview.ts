@@ -67,6 +67,12 @@ export class RecipePreview extends LitElement {
         font-style: italic;
       }
     }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
   `;
 
   @property()
@@ -108,6 +114,7 @@ export class RecipePreview extends LitElement {
                 ${ingredientsTpl}
               </details>`
             : ingredientsTpl}
+          <slot class="actions" name="actions"></slot>
         </div>
       </li>
     `;

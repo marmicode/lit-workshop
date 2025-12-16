@@ -30,6 +30,10 @@ const exercises: Exercise[] = [
     name: 'Theming',
   },
   {
+    id: '303-slots',
+    name: 'Slots',
+  },
+  {
     id: '401-fetch-recipes',
     name: 'Fetch Recipes',
   },

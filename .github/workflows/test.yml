@@ -36,19 +36,8 @@ jobs:
         uses: ./.github/actions/setup
       - run: pnpm nx run tools:sanity-check
 
-  jest:
-    name: 🎪 Jest
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup
-      - run: pnpm nx affected -t jest --pass-with-no-tests
-
   test:
-    name: ⚡️ Vitest
+    name: ✅ Test
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

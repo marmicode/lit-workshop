@@ -135,8 +135,7 @@ export class RecipeSearch extends LitElement {
                 <img
                   class="image"
                   src=${recipe.pictureUri}
-                  alt="Picture of
-                ${recipe.name}"
+                  alt="Picture of ${recipe.name}"
                 />
                 <div class="content">
                   <h2 class="name">${recipe.name}</h2>

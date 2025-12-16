@@ -17,15 +17,13 @@ pnpm cook start 302-theming
 pnpm start
 ```
 
-## 🎯 Goal: Implement theming with CSS custom properties and light-dark() function
+## 🎯 Goal: Implement theming with CSS custom properties and `light-dark()` function
 
 Your goal is to replace hardcoded colors with CSS custom properties (CSS variables) and use the modern `light-dark()` CSS function to automatically adapt colors based on the color scheme.
 
 ### 📝 Steps
 
-#### Part 1: Define CSS Custom Properties
-
-##### 1. Update `src/styles.css`
+#### 1. Update `src/styles.css`
 
 Add CSS custom properties and apply them to the body:
 
@@ -51,70 +49,7 @@ body {
 - `light-dark(light-value, dark-value)` automatically picks the right value based on `color-scheme`
 - The transition provides smooth color changes when toggling themes
 
-#### Part 2: Use CSS Variables in Components
-
-##### 1. Update RecipeSearch component (`recipe-search.ts`)
-
-Replace hardcoded colors in the toolbar gradient:
-
-```css
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
-  );
-  height: 80px;
-  width: 100%;
-}
-```
-
-Update the recipe name part styling to use `light-dark()`:
-
-```css
-wm-recipe-preview::part(name) {
-  color: light-dark(var(--secondary-color), white);
-  font-family: Cursive;
-}
-```
-
-##### 2. Update ColorSchemeToggle component (`color-scheme-toggle.ts`)
-
-Replace the hardcoded background color with a CSS variable:
-
-```css
-.toggle-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  line-height: 30px;
-
-  background: var(--background-color);
-  border-radius: 50%;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-
-  &.dark {
-    transform: translateX(28px);
-  }
-}
-```
-
-**Important:** Add `background-color` to the transition (in addition to `transform`).
-
-##### 3. Move ColorScheme type into color-scheme-toggle.ts
-
-Move the `ColorScheme` type from `color-scheme.ts` into `color-scheme-toggle.ts`:
-
-```ts
-export type ColorScheme = 'light' | 'dark';
-```
-
-Then delete the `src/app/color-scheme.ts` file.
+#### 2. Replace hardcoded colors with CSS variables and `light-dark()` function
 
 ## 📖 Appendices
 
@@ -140,33 +75,6 @@ Then delete the `src/app/color-scheme.ts` file.
 - Easy theme switching
 - Better maintainability
 - Can be changed at runtime
-
-**Defining Variables:**
-
-```css
-:root {
-  --primary-color: #667eea;
-  --spacing: 1rem;
-}
-
-body {
-  --background-color: white;
-}
-```
-
-**Using Variables:**
-
-```css
-.button {
-  background: var(--primary-color);
-  padding: var(--spacing);
-}
-
-/* With fallback */
-.text {
-  color: var(--text-color, black);
-}
-```
 
 **light-dark() Function:**
 
@@ -210,41 +118,3 @@ document.body.style.colorScheme = 'dark';
 - Defined outside are accessible inside
 - Perfect for theming components
 - Components can define their own variables for internal use
-
-**Transitions with CSS Variables:**
-
-- Can animate color changes smoothly
-- Apply transition to the property using the variable, not the variable itself
-
-```css
-/* Correct */
-.element {
-  background-color: var(--bg-color);
-  transition: background-color 0.3s;
-}
-
-/* Won't work */
-.element {
-  --bg-color: red;
-  transition: --bg-color 0.3s;
-}
-```
-
-**Organizational Pattern:**
-
-- Define global theme variables on `:root` or `body`
-- Component-specific variables in component styles
-- Use semantic naming: `--primary-color`, not `--blue`
-- Consider fallbacks for unsupported browsers
-
-**Advanced: JavaScript Integration:**
-
-```js
-// Get variable value
-const value = getComputedStyle(document.body).getPropertyValue(
-  '--primary-color'
-);
-
-// Set variable value
-document.body.style.setProperty('--primary-color', '#ff0000');
-```

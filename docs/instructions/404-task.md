@@ -4,12 +4,6 @@ sidebar_label: 404. Task Controller
 
 # Task Controller
 
-## Prerequisites
-
-🚨 Did you set up `pnpm`? Are you on the right branch?
-
-👉 [Initial Setup](./000-setup.md)
-
 ## Setup
 
 ```sh
@@ -23,35 +17,15 @@ The current implementation manually manages loading states, errors, and request 
 
 ### 📝 Steps
 
-#### 1. Update imports
-
-In `recipe-search.ts`:
-
-**Add Task import:**
+#### 1. `Task` lives in a dedicated package `@lit/task` which is already installed in the workspace. Import it:
 
 ```ts
 import { Task } from '@lit/task';
 ```
 
-**Remove unnecessary imports:**
+#### 2. Create a `Task`
 
-- Remove `PropertyValues` from lit import
-- Remove `when` from directives import
-- Remove `Recipe` import (no longer needed directly)
-
-#### 2. Remove manual state management
-
-Delete these properties:
-
-```ts
-@state() private _error?: unknown;
-@state() private _recipes: Recipe[] = [];
-private _abortController?: AbortController;
-```
-
-#### 3. Create a Task
-
-Add a Task property to handle recipe fetching:
+Add a `Task` controller to handle recipe fetching:
 
 ```ts
 private _task = new Task(this, {
@@ -61,12 +35,26 @@ private _task = new Task(this, {
 });
 ```
 
+:::warning
+The `_task` property does not need to be reactive. The `Task` controller will handle the reactive updates for us.
+:::
+
 **Key points:**
 
 - `args` function returns an array of dependencies
 - Task re-runs when any dependency changes
-- `task` function receives args and options (including signal)
+- `task` function receives args and options (including an abort signal)
 - Signal is automatically managed for request cancellation
+
+#### 3. Remove manual state management
+
+Delete these properties:
+
+```ts
+@state() private _error?: unknown;
+@state() private _recipes: Recipe[] = [];
+private _abortController?: AbortController;
+```
 
 #### 4. Remove lifecycle methods
 
@@ -75,7 +63,7 @@ Delete these methods:
 - `connectedCallback()`
 - `willUpdate()`
 
-The Task automatically runs when args change!
+The task automatically runs when args change.
 
 #### 5. Update render method
 
@@ -84,28 +72,8 @@ Replace the manual conditional rendering with `task.render()`:
 ```ts
 ${this._task.render({
   pending: () => html`<div class="loading">Loading...</div>`,
-  complete: (recipes) => html`<ul class="recipe-list">
-    ${recipes.map(
-      (recipe) =>
-        html`<wm-recipe-preview
-          .mode=${this._recipePreviewMode}
-          .recipe=${recipe}
-        >
-          <button
-            slot="actions"
-            data-recipe-id=${recipe.id}
-            @click=${this._handleAddToMealPlanner}
-          >
-            ADD
-          </button>
-        </wm-recipe-preview>`
-    )}
-  </ul>`,
-  error: () => html`<div class="error" role="alert">
-    <img src="https://marmicode.io/assets/error.gif" alt="Error" />
-    <p>Oups, something went wrong.</p>
-    <button @click=${this._fetchRecipes}>RETRY</button>
-  </div>`,
+  complete: (recipes) => html`...`,
+  error: () => html`...`,
 })}
 ```
 
@@ -128,22 +96,13 @@ Add styling for the loading state:
 }
 ```
 
-#### 7. Simplify \_fetchRecipes method
-
-Replace the entire method with:
+#### 7. Allow user to manually retry on submit
 
 ```ts
 private async _fetchRecipes() {
   await this._task.run();
 }
 ```
-
-Task automatically handles:
-
-- Canceling previous requests
-- Managing loading state
-- Catching errors
-- Updating the UI
 
 ## 📖 Appendices
 
@@ -199,7 +158,7 @@ task: ([criteria], { signal }) => {
 
 **Task States:**
 
-- `INITIAL`: Not yet run
+- `INITIAL`: Not yet run (only happens when `autoRun` is `false`)
 - `PENDING`: Currently running
 - `COMPLETE`: Successfully completed
 - `ERROR`: Failed with error
@@ -234,156 +193,4 @@ if (this._task.status === TaskStatus.COMPLETE) {
 if (this._task.status === TaskStatus.ERROR) {
   const error = this._task.error;
 }
-```
-
-**Advanced: Task Configuration:**
-
-```ts
-private _task = new Task(this, {
-  args: () => [this._userId],
-  task: async ([userId], { signal }) => {
-    const user = await fetchUser(userId, signal);
-    const posts = await fetchPosts(userId, signal);
-    return { user, posts };
-  },
-  autoRun: true,          // Default: true
-  onComplete: (value) => {
-    console.log('Task completed:', value);
-  },
-  onError: (error) => {
-    console.error('Task failed:', error);
-  },
-});
-```
-
-**Multiple Tasks:**
-
-```ts
-private _userTask = new Task(this, {
-  args: () => [this._userId],
-  task: ([id], { signal }) => fetchUser(id, signal),
-});
-
-private _postsTask = new Task(this, {
-  args: () => [this._userId],
-  task: ([id], { signal }) => fetchPosts(id, signal),
-});
-```
-
-**Dependent Tasks:**
-
-```ts
-private _userTask = new Task(this, {
-  args: () => [this._userId],
-  task: ([id], { signal }) => fetchUser(id, signal),
-});
-
-private _postsTask = new Task(this, {
-  args: () => [this._userTask.value?.id],
-  task: ([userId], { signal }) => {
-    if (!userId) return [];
-    return fetchPosts(userId, signal);
-  },
-});
-```
-
-**Task vs Manual State Management:**
-
-**Manual:**
-
-```ts
-@state() private _loading = false;
-@state() private _error?: Error;
-@state() private _data?: Data;
-
-async fetch() {
-  this._loading = true;
-  this._error = undefined;
-  try {
-    this._data = await api.fetch();
-  } catch (error) {
-    this._error = error;
-  } finally {
-    this._loading = false;
-  }
-}
-```
-
-**With Task:**
-
-```ts
-private _task = new Task(this, {
-  args: () => [this._filter],
-  task: ([filter], { signal }) =>
-    api.fetch(filter, signal),
-});
-```
-
-**When to Use Task:**
-
-- Fetching data from APIs
-- Async operations tied to reactive properties
-- Need automatic request cancellation
-- Want loading/error states handled automatically
-
-**When NOT to Use Task:**
-
-- One-off operations (button clicks)
-- Operations not tied to component state
-- Complex state machines
-- Need fine-grained control over timing
-
-**Testing with Task:**
-
-```ts
-// Wait for task to complete
-await component._task.taskComplete;
-
-// Check status
-expect(component._task.status).toBe(TaskStatus.COMPLETE);
-
-// Check value
-expect(component._task.value).toEqual(expectedData);
-```
-
-**Common Patterns:**
-
-**Pagination:**
-
-```ts
-private _task = new Task(this, {
-  args: () => [this._page, this._pageSize],
-  task: ([page, size], { signal }) =>
-    api.fetch({ page, size, signal }),
-});
-```
-
-**Search with Debounce:**
-
-```ts
-private _debouncedSearch = debounce((query: string) => {
-  this._searchQuery = query;
-}, 300);
-
-private _task = new Task(this, {
-  args: () => [this._searchQuery],
-  task: ([query], { signal }) =>
-    api.search(query, signal),
-});
-```
-
-**Retry Logic:**
-
-```ts
-private async _retry() {
-  await this._task.run();
-}
-
-// In template
-${this._task.render({
-  error: () => html`
-    <div>Error occurred</div>
-    <button @click=${this._retry}>Retry</button>
-  `
-})}
 ```

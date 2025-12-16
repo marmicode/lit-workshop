@@ -50,6 +50,8 @@ async searchRecipes(
 1. Abort any existing request using the `AbortController.abort` method.
 2. Create a new `AbortController` and pass its signal to the repository.
 
+#### 4. Now, what about when the component is destroyed?
+
 ## 📖 Appendices
 
 ### MDN Documentation

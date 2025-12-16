@@ -21,7 +21,9 @@ Your goal is to replace the hardcoded recipe list with data fetched from a remot
 
 #### 2. Make `_recipes` reactive
 
-**Important:** Add `@state()` decorator so the component re-renders when recipes are fetched.
+:::warning
+Add `@state()` decorator so the component re-renders when recipes are fetched.
+:::
 
 #### 3. Remove filtered recipes state
 
@@ -42,7 +44,9 @@ override connectedCallback() {
 }
 ```
 
-**Important:** Always call `super.connectedCallback()` first.
+:::warning
+Always call `super.connectedCallback()` first.
+:::
 
 #### 6. Fetch recipes when criteria change
 

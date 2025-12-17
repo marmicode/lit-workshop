@@ -22,7 +22,7 @@ The `RecipeSearch` component is doing too much - it handles both search function
 ```ts
 @customElement('wm-recipe-preview')
 export class RecipePreview extends LitElement {
-  @property()
+  @property({ type: Object })
   recipe?: Recipe;
 
   // TODO

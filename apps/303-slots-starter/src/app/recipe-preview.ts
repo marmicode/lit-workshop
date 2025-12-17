@@ -73,7 +73,7 @@ export class RecipePreview extends LitElement {
   @property()
   mode: RecipePreviewMode = 'detailed';
 
-  @property()
+  @property({ type: Object })
   recipe?: Recipe;
 
   protected override render() {

@@ -82,7 +82,7 @@ export class Drawer extends LitElement {
   @property({ type: Boolean })
   open = false;
 
-  @property({ type: String })
+  @property()
   label?: string;
 
   protected override render() {

@@ -57,7 +57,7 @@ export class RecipeFilter extends LitElement {
     }
   `;
 
-  @property()
+  @property({ type: Object })
   criteria?: RecipeFilterCriteria;
 
   @query('input[name="keywords"]')

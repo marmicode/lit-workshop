@@ -109,7 +109,7 @@ export class MealPlan extends LitElement {
       ></div>
       <div class=${classMap({ drawer: true, open: this.open })}>
         <header class="header">
-          <h2 class="title">Meal Planning</h2>
+          <h2 class="title">Meal Plan</h2>
           <button class="close-button" @click=${this._handleClose}>×</button>
         </header>
         <div class="content">

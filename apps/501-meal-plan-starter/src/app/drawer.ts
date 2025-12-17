@@ -73,8 +73,10 @@ export class Drawer extends LitElement {
     }
 
     .content {
+      display: flex;
       flex: 1;
-      overflow-y: auto;
+      flex-direction: column;
+      overflow-y: scroll;
       padding: 1rem;
     }
   `;

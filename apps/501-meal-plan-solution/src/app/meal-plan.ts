@@ -1,5 +1,9 @@
 import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { mealPlanner } from './meal-planner';
+import { RxSubscribeController } from './rx-subscribe.controller';
+import { when } from 'lit/directives/when.js';
+import './recipe-preview';
 
 @customElement('wm-meal-plan')
 export class MealPlan extends LitElement {
@@ -25,15 +29,37 @@ export class MealPlan extends LitElement {
     }
   `;
 
+  private _mealPlanner = mealPlanner;
+  private _recipes = new RxSubscribeController(
+    this,
+    this._mealPlanner.recipes$
+  );
+
   protected override render() {
-    return html`
-      <div class="empty-message">
-        <div class="empty-message-icon">🍽️</div>
-        <div class="empty-message-text">
-          Your meal plan is empty.<br />
-          Add recipes to get started!
+    const hasRecipes = this._recipes.value && this._recipes.value.length > 0;
+    return when(
+      hasRecipes,
+      () => html`
+        <ul>
+          ${this._recipes.value?.map(
+            (recipe) => html`
+              <wm-recipe-preview
+                mode="compact"
+                .recipe=${recipe}
+              ></wm-recipe-preview>
+            `
+          )}
+        </ul>
+      `,
+      () => html`
+        <div class="empty-message">
+          <div class="empty-message-icon">🍽️</div>
+          <div class="empty-message-text">
+            Your meal plan is empty.<br />
+            Add recipes to get started!
+          </div>
         </div>
-      </div>
-    `;
+      `
+    );
   }
 }

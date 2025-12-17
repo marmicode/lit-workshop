@@ -12,6 +12,7 @@ import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
 import { recipeRepository } from './recipe-repository';
 import './selector';
 import { SelectorChange } from './selector';
+import { mealPlanner } from './meal-planner';
 
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
@@ -84,6 +85,8 @@ export class RecipeSearch extends LitElement {
   @state()
   private _mealPlanOpen = false;
 
+  private _mealPlanner = mealPlanner;
+
   private _task = new Task(this, {
     args: () => [this._criteria],
     task: ([criteria], { signal }) =>
@@ -152,7 +155,13 @@ export class RecipeSearch extends LitElement {
 
   private _handleAddToMealPlanner(event: MouseEvent) {
     const recipeId = (event.target as HTMLButtonElement).dataset.recipeId;
-    alert(`Adding recipe ${recipeId} to meal planner`);
+    const recipe = this._task.value?.find((recipe) => recipe.id === recipeId);
+    if (recipe == null) {
+      throw new Error(
+        `Cannot add recipe to meal plan: Recipe with id ${recipeId} not found`
+      );
+    }
+    this._mealPlanner.addRecipe(recipe);
   }
 
   private _handleCriteriaChange(event: RecipeFilterCriteriaChange) {

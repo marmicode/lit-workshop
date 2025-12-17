@@ -26,6 +26,7 @@ describe('cook', () => {
       'git switch main',
       'git branch -D cooking || exit 0',
       'git switch -c cooking',
+      'pnpm nx sync',
       'git add .',
       'git commit -m "feat: ✨ focus on 1-recipe-search-starter"',
     ]);
@@ -35,7 +36,7 @@ describe('cook', () => {
           defaultProject: '1-recipe-search-starter',
         },
         null,
-        2,
+        2
       ),
       'apps/1-recipe-search-starter/some-file.txt': '',
     });
@@ -52,6 +53,7 @@ describe('cook', () => {
       'git branch -D cooking || exit 0',
       'git switch -c cooking',
       'git show main:apps/1-recipe-search-solution/src/app/recipe/recipe-search.ng.ts > apps/1-recipe-search-starter/src/app/recipe/recipe-search.ng.ts',
+      'pnpm nx sync',
       'git add .',
       'git commit -m "feat: ✨ focus on 1-recipe-search-starter"',
     ]);
@@ -67,6 +69,7 @@ describe('cook', () => {
       'git switch main',
       'git branch -D cooking || exit 0',
       'git switch -c cooking',
+      'pnpm nx sync',
       'git add .',
       'git commit -m "feat: ✨ focus on 3-recipe-search-async-pipe-starter"',
     ]);
@@ -84,6 +87,7 @@ describe('cook', () => {
       'git switch main',
       'git branch -D cooking || exit 0',
       'git switch -c cooking',
+      'pnpm nx sync',
       'git add .',
       'git commit -m "feat: ✨ focus on 1-recipe-search-solution"',
     ]);
@@ -123,6 +127,7 @@ describe('cook', () => {
       'git switch -c cooking',
       /* `useTdd` is using its default value (false) because we are in non-interactive mode (-y). */
       'git show main:apps/1-recipe-search-solution/src/app/recipe/recipe-search.ng.ts > apps/1-recipe-search-starter/src/app/recipe/recipe-search.ng.ts',
+      'pnpm nx sync',
       'git add .',
       'git commit -m "feat: ✨ focus on 1-recipe-search-starter"',
     ]);
@@ -195,7 +200,7 @@ class CommandRunnerFake implements CommandRunner {
 
   executeCommand(
     command: string,
-    { env }: { env?: Record<string, string> } = {},
+    { env }: { env?: Record<string, string> } = {}
   ) {
     this._executedCommands.push(command);
   }
@@ -263,16 +268,16 @@ class FileSystemFake implements FileSystemAdapter {
             return filePathTokens.slice(0, dirPathTokens.length + 1).join('/');
           })
           .filter((folderPath) => folderPath.startsWith(dirPath))
-          .map((folderPath) => folderPath.replace(`${dirPath}/`, '')),
-      ),
+          .map((folderPath) => folderPath.replace(`${dirPath}/`, ''))
+      )
     );
   }
 
   removeDir(dirPath: string): void {
     this._files = Object.fromEntries(
       Object.entries(this._files).filter(
-        ([filePath]) => !filePath.startsWith(dirPath),
-      ),
+        ([filePath]) => !filePath.startsWith(dirPath)
+      )
     );
   }
 }

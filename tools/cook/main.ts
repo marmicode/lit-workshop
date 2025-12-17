@@ -71,7 +71,7 @@ interface Context {
 
 async function prepareCommand(
   parsedArgs: ParsedArgs,
-  ctx: Context,
+  ctx: Context
 ): Promise<Command> {
   const { promptAdapter } = ctx;
   const exercise = maybeGetCurrentExercise(ctx);
@@ -171,7 +171,7 @@ function parseArgs(args: string[]): ParsedArgs {
 
 function assertExerciseSelected(
   commandType: CommandType,
-  exercise: Exercise | null,
+  exercise: Exercise | null
 ): asserts exercise is Exercise {
   if (exercise === null) {
     bail(`${commandType} requires an exercise to be selected`);
@@ -212,7 +212,7 @@ async function goToExercise(ctx: Context, exerciseId?: string) {
   }
 
   const selectedExercise = exercises.find(
-    (exercise) => exercise.id === exerciseId,
+    (exercise) => exercise.id === exerciseId
   );
   if (!selectedExercise) {
     bail(`Selected exercise not found: ${exerciseId}`);
@@ -261,7 +261,7 @@ function checkoutImplementation(ctx: Context, exercise: Exercise) {
     const starterFile = `apps/${exercise.id}${STARTER_SUFFIX}/${relativePath}`;
 
     commandRunner.executeCommand(
-      `git show ${base}:${implementationFile} > ${starterFile}`,
+      `git show ${base}:${implementationFile} > ${starterFile}`
     );
   }
 }
@@ -293,8 +293,8 @@ function focusOnProject(ctx: Context, project: string) {
         defaultProject: project,
       },
       null,
-      2,
-    ),
+      2
+    )
   );
 
   const appsFolder = 'apps';
@@ -303,6 +303,7 @@ function focusOnProject(ctx: Context, project: string) {
       fileSystemAdapter.removeDir(join(appsFolder, folder));
     }
   }
+  commandRunner.executeCommand(`pnpm nx sync`);
   commandRunner.executeCommand(`git add .`);
   commandRunner.executeCommand(`git commit -m "feat: ✨ focus on ${project}"`, {
     env: {

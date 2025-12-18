@@ -65,21 +65,6 @@ export class RecipePreview extends LitElement {
         cursor: pointer;
         font-style: italic;
       }
-
-      .compact {
-        &.recipe {
-          max-width: 300px;
-        }
-
-        .image {
-          max-height: 100px;
-        }
-
-        summary {
-          cursor: pointer;
-          font-style: italic;
-        }
-      }
     }
   `;
 

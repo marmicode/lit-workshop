@@ -1,8 +1,7 @@
 import { Task } from '@lit/task';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { cache } from 'lit/directives/cache.js';
-import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import './color-scheme-toggle';
 import './drawer';
 import './meal-plan';
@@ -15,7 +14,6 @@ import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
 import { recipeRepository } from './recipe-repository';
 import './selector';
 import { SelectorChange } from './selector';
-import { when } from 'lit/directives/when.js';
 
 const RECIPE_SEARCH_MODES = ['1x', '200x'];
 type RecipeSearchMode = (typeof RECIPE_SEARCH_MODES)[number];

@@ -4,11 +4,11 @@ import { customElement, property } from 'lit/decorators.js';
 /**
  * @event value-change - Emitted when the selected value changes
  *
- * @property {T[]} options - The options to select from
- * @property {T} value - The selected value
+ * @property {string[]} options - The options to select from
+ * @property {string} value - The selected value
  */
 @customElement('wm-selector')
-export class Selector<T extends string> extends LitElement {
+export class Selector extends LitElement {
   static override styles = css`
     :host {
       display: flex;
@@ -42,10 +42,10 @@ export class Selector<T extends string> extends LitElement {
   `;
 
   @property({ type: Array })
-  options: T[] = [];
+  options: string[] = [];
 
   @property()
-  value?: T;
+  value?: string;
 
   protected override render() {
     return this.options.map((option) => {
@@ -64,9 +64,7 @@ export class Selector<T extends string> extends LitElement {
 }
 
 export class SelectorChange<T extends string> extends Event {
-  value: T;
-  constructor(value: T) {
+  constructor(public value: T) {
     super('value-change');
-    this.value = value;
   }
 }

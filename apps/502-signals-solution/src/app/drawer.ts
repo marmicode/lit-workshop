@@ -89,10 +89,6 @@ export class Drawer extends LitElement {
 
   protected override render() {
     return html`
-      <div
-        class=${classMap({ overlay: true, open: this.open })}
-        @click=${this._handleClose}
-      ></div>
       <div class=${classMap({ drawer: true, open: this.open })}>
         <header class="header">
           ${when(this.label, () => html`<h2 class="title">${this.label}</h2>`)}

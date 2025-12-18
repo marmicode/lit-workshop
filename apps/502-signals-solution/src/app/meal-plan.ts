@@ -1,12 +1,12 @@
+import { SignalWatcher } from '@lit-labs/signals';
 import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { mealPlanner } from './meal-planner';
-import { RxSubscribeController } from './rx-subscribe.controller';
 import { when } from 'lit/directives/when.js';
+import { mealPlanner } from './meal-planner';
 import './recipe-preview';
 
 @customElement('wm-meal-plan')
-export class MealPlan extends LitElement {
+export class MealPlan extends SignalWatcher(LitElement) {
   static override styles = css`
     .empty-message {
       display: flex;
@@ -30,18 +30,15 @@ export class MealPlan extends LitElement {
   `;
 
   private _mealPlanner = mealPlanner;
-  private _recipes = new RxSubscribeController(
-    this,
-    this._mealPlanner.recipes$
-  );
 
   protected override render() {
-    const hasRecipes = this._recipes.value && this._recipes.value.length > 0;
+    const recipes = this._mealPlanner.recipes.get();
+    const hasRecipes = recipes && recipes.length > 0;
     return when(
       hasRecipes,
       () => html`
         <ul>
-          ${this._recipes.value?.map(
+          ${recipes?.map(
             (recipe) => html`
               <wm-recipe-preview
                 mode="compact"

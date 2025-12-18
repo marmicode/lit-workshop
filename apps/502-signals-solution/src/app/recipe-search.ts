@@ -1,9 +1,11 @@
+import { signal, SignalWatcher } from '@lit-labs/signals';
 import { Task } from '@lit/task';
 import { css, html, LitElement } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import './color-scheme-toggle';
 import './drawer';
 import './meal-plan';
+import { mealPlanner } from './meal-planner';
 import './recipe-filter';
 import { RecipeFilterCriteriaChange } from './recipe-filter';
 import { RecipeFilterCriteria } from './recipe-filter-criteria';
@@ -12,10 +14,9 @@ import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
 import { recipeRepository } from './recipe-repository';
 import './selector';
 import { SelectorChange } from './selector';
-import { mealPlanner } from './meal-planner';
 
 @customElement('wm-recipe-search')
-export class RecipeSearch extends LitElement {
+export class RecipeSearch extends SignalWatcher(LitElement) {
   static override styles = css`
     .toolbar {
       display: flex;
@@ -76,19 +77,14 @@ export class RecipeSearch extends LitElement {
     }
   `;
 
-  @state()
-  private _criteria?: RecipeFilterCriteria;
-
-  @state()
-  private _recipePreviewMode: RecipePreviewMode = 'detailed';
-
-  @state()
-  private _mealPlanOpen = false;
+  private _criteria = signal<RecipeFilterCriteria | undefined>(undefined);
+  private _recipePreviewMode = signal<RecipePreviewMode>('detailed');
+  private _mealPlanOpen = signal(false);
 
   private _mealPlanner = mealPlanner;
 
   private _task = new Task(this, {
-    args: () => [this._criteria],
+    args: () => [this._criteria.get()],
     task: ([criteria], { signal }) =>
       recipeRepository.searchRecipes(criteria, { signal }),
   });
@@ -107,7 +103,7 @@ export class RecipeSearch extends LitElement {
       </header>
 
       <wm-drawer
-        .open=${this._mealPlanOpen}
+        .open=${this._mealPlanOpen.get()}
         label="🍽️ Meal Plan"
         @close=${this._handleCloseMealPlan}
       >
@@ -115,14 +111,14 @@ export class RecipeSearch extends LitElement {
       </wm-drawer>
 
       <wm-recipe-filter
-        .criteria=${this._criteria}
+        .criteria=${this._criteria.get()}
         @criteria-change=${this._handleCriteriaChange}
         @criteria-submit=${this._fetchRecipes}
       ></wm-recipe-filter>
 
       <wm-selector
         .options=${RECIPE_PREVIEW_MODES}
-        .value=${this._recipePreviewMode}
+        .value=${this._recipePreviewMode.get()}
         @value-change=${this._handleRecipePreviewModeChange}
       ></wm-selector>
 
@@ -132,7 +128,7 @@ export class RecipeSearch extends LitElement {
           ${recipes.map(
             (recipe) =>
               html`<wm-recipe-preview
-                .mode=${this._recipePreviewMode}
+                .mode=${this._recipePreviewMode.get()}
                 .recipe=${recipe}
               >
                 <button
@@ -165,13 +161,13 @@ export class RecipeSearch extends LitElement {
   }
 
   private _handleCriteriaChange(event: RecipeFilterCriteriaChange) {
-    this._criteria = event.criteria;
+    this._criteria.set(event.criteria);
   }
 
   private _handleRecipePreviewModeChange(
     event: SelectorChange<RecipePreviewMode>
   ) {
-    this._recipePreviewMode = event.value;
+    this._recipePreviewMode.set(event.value);
   }
 
   private async _fetchRecipes() {
@@ -179,10 +175,10 @@ export class RecipeSearch extends LitElement {
   }
 
   private _handleOpenMealPlan() {
-    this._mealPlanOpen = true;
+    this._mealPlanOpen.set(true);
   }
 
   private _handleCloseMealPlan() {
-    this._mealPlanOpen = false;
+    this._mealPlanOpen.set(false);
   }
 }

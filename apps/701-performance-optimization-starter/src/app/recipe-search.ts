@@ -1,6 +1,8 @@
 import { Task } from '@lit/task';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+import { repeat } from 'lit/directives/repeat.js';
 import './color-scheme-toggle';
 import './drawer';
 import './meal-plan';
@@ -13,12 +15,16 @@ import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
 import { recipeRepository } from './recipe-repository';
 import './selector';
 import { SelectorChange } from './selector';
+import { when } from 'lit/directives/when.js';
 
 const RECIPE_SEARCH_MODES = ['1x', '200x'];
 type RecipeSearchMode = (typeof RECIPE_SEARCH_MODES)[number];
 
 const SORT_DIRECTIONS = ['⬇️', '⬆️'];
 type SortDirection = (typeof SORT_DIRECTIONS)[number];
+
+const SHOW_OPTIONS = ['🐵', '🙈'];
+type ShowOption = (typeof SHOW_OPTIONS)[number];
 
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {
@@ -103,6 +109,9 @@ export class RecipeSearch extends LitElement {
   @state()
   private _sortDirection: SortDirection = '⬇️';
 
+  @state()
+  private _showOptions: ShowOption = '🐵';
+
   private _mealPlanner = mealPlannerSingleton.get();
 
   private _task = new Task(this, {
@@ -124,7 +133,7 @@ export class RecipeSearch extends LitElement {
   });
 
   protected override render() {
-    const measureName = 'render RecipeSearch';
+    const measureName = '⏱️';
     console.time(measureName);
     this.updateComplete.then(() => console.timeEnd(measureName));
 
@@ -172,38 +181,46 @@ export class RecipeSearch extends LitElement {
           .value=${this._sortDirection}
           @value-change=${this._handleSortDirectionChange}
         ></wm-selector>
+
+        <wm-selector
+          .options=${SHOW_OPTIONS}
+          .value=${this._showOptions}
+          @value-change=${this._handleShowOptionsChange}
+        ></wm-selector>
       </div>
 
-      ${this._task.render({
-        pending: () => html`<div class="loading">Loading...</div>`,
-        complete: (recipes) => {
-          if (this._sortDirection === '⬆️') {
-            recipes = [...recipes].reverse();
-          }
+      ${when(this._showOptions === '🐵', () =>
+        this._task.render({
+          pending: () => html`<div class="loading">Loading...</div>`,
+          complete: (recipes) => {
+            if (this._sortDirection === '⬆️') {
+              recipes = [...recipes].reverse();
+            }
 
-          return html`<ul class="recipe-list">
-            ${recipes.map(
-              (recipe) => html`<wm-recipe-preview
-                .mode=${this._recipePreviewMode}
-                .recipe=${recipe}
-              >
-                <button
-                  slot="actions"
-                  data-recipe-id=${recipe.id}
-                  @click=${this._handleAddToMealPlanner}
+            return html`<ul class="recipe-list">
+              ${recipes.map(
+                (recipe) => html`<wm-recipe-preview
+                  .mode=${this._recipePreviewMode}
+                  .recipe=${recipe}
                 >
-                  ADD
-                </button>
-              </wm-recipe-preview>`
-            )}
-          </ul>`;
-        },
-        error: () => html`<div class="error" role="alert">
-          <img src="https://marmicode.io/assets/error.gif" alt="Error" />
-          <p>Oups, something went wrong.</p>
-          <button @click=${this._fetchRecipes}>RETRY</button>
-        </div>`,
-      })} `;
+                  <button
+                    slot="actions"
+                    data-recipe-id=${recipe.id}
+                    @click=${this._handleAddToMealPlanner}
+                  >
+                    ADD
+                  </button>
+                </wm-recipe-preview>`
+              )}
+            </ul>`;
+          },
+          error: () => html`<div class="error" role="alert">
+            <img src="https://marmicode.io/assets/error.gif" alt="Error" />
+            <p>Oups, something went wrong.</p>
+            <button @click=${this._fetchRecipes}>RETRY</button>
+          </div>`,
+        })
+      )} `;
   }
 
   private _handleAddToMealPlanner(event: MouseEvent) {
@@ -235,6 +252,10 @@ export class RecipeSearch extends LitElement {
 
   private _handleSortDirectionChange(event: SelectorChange<SortDirection>) {
     this._sortDirection = event.value;
+  }
+
+  private _handleShowOptionsChange(event: SelectorChange<ShowOption>) {
+    this._showOptions = event.value;
   }
 
   private async _fetchRecipes() {

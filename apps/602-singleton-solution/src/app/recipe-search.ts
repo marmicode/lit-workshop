@@ -10,7 +10,7 @@ import { RecipeFilterCriteriaChange } from './recipe-filter';
 import { RecipeFilterCriteria } from './recipe-filter-criteria';
 import './recipe-preview';
 import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
-import { recipeRepository } from './recipe-repository';
+import { recipeRepositorySingleton } from './recipe-repository';
 import './selector';
 import { SelectorChange } from './selector';
 
@@ -87,10 +87,12 @@ export class RecipeSearch extends LitElement {
 
   private _mealPlanner = mealPlannerSingleton.get();
 
+  private _recipeRepository = recipeRepositorySingleton.get();
+
   private _task = new Task(this, {
     args: () => [this._criteria],
     task: ([criteria], { signal }) =>
-      recipeRepository.searchRecipes(criteria, { signal }),
+      this._recipeRepository.searchRecipes(criteria, { signal }),
   });
 
   protected override render() {

@@ -1,5 +1,6 @@
 import { Recipe } from './recipe';
 import { RecipeFilterCriteria } from './recipe-filter-criteria';
+import { createSingleton } from './singleton';
 
 export class RecipeRepository {
   async searchRecipes(
@@ -38,7 +39,9 @@ export class RecipeRepository {
   }
 }
 
-export const recipeRepository = new RecipeRepository();
+export const recipeRepositorySingleton = createSingleton(
+  () => new RecipeRepository()
+);
 
 interface RecipeListResponseDto {
   items: RecipeDto[];

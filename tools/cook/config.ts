@@ -69,6 +69,10 @@ const exercises: Exercise[] = [
     id: '701-performance-optimization',
     name: '701. Performance Optimization',
   },
+  {
+    id: '801-testing',
+    name: '801. Testing',
+  },
 ];
 
 export const config: Config = {

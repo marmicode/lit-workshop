@@ -104,6 +104,12 @@
     },
     {
       "path": "./apps/701-performance-optimization-starter"
+    },
+    {
+      "path": "./apps/801-testing-solution"
+    },
+    {
+      "path": "./apps/801-testing-starter"
     }
   ]
 }

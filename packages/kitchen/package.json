@@ -12,6 +12,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./meal-plan": {
+      "types": "./dist/meal-plan.d.ts",
+      "import": "./dist/meal-plan.js",
+      "default": "./dist/meal-plan.js"
+    },
+    "./recipe-search": {
+      "types": "./dist/recipe-search.d.ts",
+      "import": "./dist/recipe-search.js",
+      "default": "./dist/recipe-search.js"
     }
   }
 }

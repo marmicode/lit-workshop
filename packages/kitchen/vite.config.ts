@@ -1,4 +1,3 @@
-/// <reference types='vitest' />
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -6,8 +5,11 @@ export default defineConfig({
   cacheDir: '../../node_modules/.vite/packages/kitchen',
   build: {
     lib: {
-      entry: 'src/index.ts',
-      fileName: 'index',
+      entry: {
+        index: 'src/index.ts',
+        'meal-plan': 'src/meal-plan.ts',
+        'recipe-search': 'src/recipe-search.ts',
+      },
       formats: ['es'],
     },
   },

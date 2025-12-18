@@ -9,9 +9,10 @@ export default [
         'error',
         {
           ignoredFiles: [
+            '{projectRoot}/**/*.{spec,test-d}.ts',
             '{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}',
             '{projectRoot}/esbuild.config.{js,ts,mjs,mts}',
-            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
+            '{projectRoot}/{vite,vitest}.config.{js,ts,mjs,mts}',
           ],
         },
       ],

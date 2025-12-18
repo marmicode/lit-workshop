@@ -8,6 +8,7 @@ import {
 } from './infra';
 import { Exercise } from './core';
 import { type Public } from './util';
+import { PromptOptions } from './infra.ts';
 
 describe('cook', () => {
   it('does not checkout the implementation if TDD is enabled', async () => {
@@ -294,13 +295,17 @@ class PromptFake implements Public<PromptAdapter> {
     this._interactive = false;
   }
 
-  prompt<T>(options) {
+  prompt<T>(options: PromptOptions<T> & { initial: T[keyof T] }) {
     const { name, initial } = options;
+    if (typeof name !== 'string') {
+      throw new Error('Name must be a string');
+    }
+
     if (!this._interactive) {
       return initial !== undefined ? ({ [name]: initial } as T) : null;
     }
     return Promise.resolve({
-      [options.name]: this._choices[options.name] ?? options.initial,
+      [name]: this._choices[name] ?? options.initial,
     } as T);
   }
 }

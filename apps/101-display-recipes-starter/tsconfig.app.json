@@ -8,6 +8,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    "noUnusedLocals": false,
     "experimentalDecorators": true,
     "useDefineForClassFields": false
   },

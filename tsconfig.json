@@ -110,6 +110,9 @@
     },
     {
       "path": "./apps/801-testing-starter"
+    },
+    {
+      "path": "./tools"
     }
   ]
 }

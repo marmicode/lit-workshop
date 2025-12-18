@@ -1,0 +1,9 @@
+{
+  "name": "601-context-starter",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/601-context-starter/src",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project display-recipes-starter --web",
+  "targets": {}
+}

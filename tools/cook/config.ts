@@ -57,6 +57,10 @@ const exercises: Exercise[] = [
     id: '502-signals',
     name: '502. Signals',
   },
+  {
+    id: '601-context',
+    name: '601. Context',
+  },
 ];
 
 export const config: Config = {

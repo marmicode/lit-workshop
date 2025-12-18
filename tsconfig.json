@@ -86,6 +86,12 @@
     },
     {
       "path": "./apps/502-signals-starter"
+    },
+    {
+      "path": "./apps/601-context-starter"
+    },
+    {
+      "path": "./apps/601-context-solution"
     }
   ]
 }

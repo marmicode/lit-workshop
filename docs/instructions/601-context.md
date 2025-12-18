@@ -11,7 +11,7 @@ pnpm cook start 601-context
 pnpm start
 ```
 
-## 🎯 Goal: Use Lit Context for dependency injection
+## 🎯 Goal: Use Lit Context
 
 Your goal is to replace the global singleton pattern with Lit Context. Context provides a way to share data between components without prop drilling, while also making the code more testable and flexible.
 
@@ -104,15 +104,6 @@ private _recipes = new RxSubscribeController(
 - [@lit/context Package](https://www.npmjs.com/package/@lit/context)
 
 ### Key Concepts
-
-**Why Context over Singletons:**
-
-| Singleton                   | Context                                |
-| --------------------------- | -------------------------------------- |
-| Global state, hard to test  | Scoped to component tree, easy to mock |
-| One instance for entire app | Multiple instances possible            |
-| Implicit dependency         | Explicit dependency injection          |
-| Tight coupling              | Loose coupling                         |
 
 **createContext():**
 

@@ -5,5 +5,12 @@
   "sourceRoot": "apps/404-task-solution/src",
   "tags": [],
   "// targets": "to see all targets run: nx show project display-recipes-starter --web",
-  "targets": {}
+  "targets": {
+    "analyze": {
+      "command": "lit-analyzer src",
+      "options": {
+        "cwd": "{projectRoot}"
+      }
+    }
+  }
 }

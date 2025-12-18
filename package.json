@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "analyze": "nx analyze",
     "cook": "node --experimental-strip-types tools/cook/main.ts",
     "start": "nx dev"
   },
@@ -35,6 +36,7 @@
     "eslint-plugin-lit": "2.1.1",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
+    "lit-analyzer": "2.0.3",
     "nx": "22.2.0",
     "prettier": "^2.6.2",
     "swc-loader": "0.1.15",

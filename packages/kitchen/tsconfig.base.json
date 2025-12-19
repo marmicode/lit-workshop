@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@kitchen/core": ["./src/core/index.ts"],
+      "@kitchen/domain": ["./src/domain/index.ts"],
+      "@kitchen/feature-meal-plan": ["./src/feature-meal-plan/index.ts"],
+      "@kitchen/feature-search": ["./src/feature-search/index.ts"],
+      "@kitchen/infra": ["./src/infra/index.ts"],
+      "@kitchen/infra/testing": ["./src/infra/testing/index.ts"],
+      "@kitchen/testing": ["./src/testing/index.ts"],
+      "@kitchen/ui": ["./src/ui/index.ts"],
+      "@kitchen/util": ["./src/util/index.ts"]
+    }
+  }
+}

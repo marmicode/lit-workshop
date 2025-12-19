@@ -1,11 +1,11 @@
+import { recipeMother } from '@kitchen/core';
+import { recipeRepositorySingleton } from '@kitchen/infra';
+import { RecipeRepositoryFake } from '@kitchen/infra/testing';
+import { singletonTesting } from '@kitchen/util';
+import { mount } from '@kitchen/testing';
 import { describe, expect, it, onTestFinished } from 'vitest';
 import { page } from 'vitest/browser';
 import { RecipeSearch } from './recipe-search';
-import { mount } from './testing/mount';
-import { recipeRepositorySingleton } from './recipe-repository';
-import { RecipeRepositoryFake } from './recipe-repository.fake';
-import { singletonTesting } from './singleton';
-import { recipeMother } from './recipe.mother';
 
 describe(RecipeSearch.name, () => {
   it('displays all recipes', async () => {

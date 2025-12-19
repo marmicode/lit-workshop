@@ -3,7 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js';
 import {
   createRecipeFilterCriteria,
   RecipeFilterCriteria,
-} from './recipe-filter-criteria';
+} from '@kitchen/core';
 
 /**
  * @event criteria-change - Emitted when an input's value changes

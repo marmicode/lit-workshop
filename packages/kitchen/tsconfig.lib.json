@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src",
@@ -7,7 +7,10 @@
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["dom"],
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
   },
   "include": ["src/**/*.ts"],
   "references": [],

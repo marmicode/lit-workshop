@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { Recipe } from './recipe';
-import { createSingleton } from './singleton';
+import { type Recipe } from '@kitchen/core';
+import { createSingleton } from '@kitchen/util';
 
 export class MealPlanner {
   private _recipes$ = new BehaviorSubject<Recipe[]>([]);

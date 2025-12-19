@@ -2,7 +2,7 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
-import { Recipe } from './recipe';
+import { Recipe } from '@kitchen/core';
 
 /**
  * @property {Recipe} recipe - The recipe to display

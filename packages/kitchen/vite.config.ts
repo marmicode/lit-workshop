@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig({
   root: import.meta.dirname,
@@ -7,9 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: 'src/index.ts',
-        'meal-plan': 'src/meal-plan.ts',
-        'recipe-search': 'src/recipe-search.ts',
+        'meal-plan': 'src/feature-meal-plan/index.ts',
+        'recipe-search': 'src/feature-recipe-search/index.ts',
       },
       formats: ['es'],
     },
@@ -18,5 +18,6 @@ export default defineConfig({
     dts({
       tsconfigPath: 'tsconfig.lib.json',
     }),
+    nxViteTsPaths(),
   ],
 });

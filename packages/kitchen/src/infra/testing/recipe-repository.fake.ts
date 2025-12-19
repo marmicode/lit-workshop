@@ -1,7 +1,6 @@
-import { Recipe } from './recipe';
-import { RecipeFilterCriteria } from './recipe-filter-criteria';
+import { Recipe, RecipeFilterCriteria } from '@kitchen/core';
 
-import { RecipeRepository } from './recipe-repository';
+import { RecipeRepository } from '../recipe-repository';
 
 export class RecipeRepositoryFake implements Public<RecipeRepository> {
   private _recipes: Recipe[] = [];

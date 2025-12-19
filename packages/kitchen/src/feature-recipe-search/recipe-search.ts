@@ -1,18 +1,16 @@
+import { RecipeFilterCriteria } from '@kitchen/core';
+import { mealPlannerSingleton } from '@kitchen/domain';
+import { recipeRepositorySingleton } from '@kitchen/infra';
+import '@kitchen/ui';
+import {
+  RECIPE_PREVIEW_MODES,
+  RecipeFilterCriteriaChange,
+  RecipePreviewMode,
+  SelectorChange,
+} from '@kitchen/ui';
 import { Task } from '@lit/task';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import './color-scheme-toggle';
-import './drawer';
-import './meal-plan';
-import { mealPlannerSingleton } from './meal-planner';
-import './recipe-filter';
-import { RecipeFilterCriteriaChange } from './recipe-filter';
-import { RecipeFilterCriteria } from './recipe-filter-criteria';
-import './recipe-preview';
-import { RECIPE_PREVIEW_MODES, RecipePreviewMode } from './recipe-preview';
-import { recipeRepositorySingleton } from './recipe-repository';
-import './selector';
-import { SelectorChange } from './selector';
 
 @customElement('wm-recipe-search')
 export class RecipeSearch extends LitElement {

@@ -1,1 +1,1 @@
-import './app/recipe-search';
+import '@lit-workshop/kitchen';

@@ -8,11 +8,6 @@
   "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
     "./meal-plan": {
       "types": "./dist/meal-plan.d.ts",
       "import": "./dist/meal-plan.js",
@@ -23,5 +18,9 @@
       "import": "./dist/recipe-search.js",
       "default": "./dist/recipe-search.js"
     }
+  },
+  "peerDependencies": {
+    "@lit/task": "~1.0.3",
+    "lit": "~3.3.1"
   }
 }

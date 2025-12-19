@@ -30,5 +30,6 @@
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": []
 }

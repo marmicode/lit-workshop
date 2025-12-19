@@ -1,6 +1,6 @@
-import { Recipe } from './recipe';
-import { RecipeFilterCriteria } from './recipe-filter-criteria';
-import { createSingleton } from './singleton';
+import { Recipe } from '@kitchen/core';
+import { RecipeFilterCriteria } from '@kitchen/core';
+import { createSingleton } from '@kitchen/util';
 
 export class RecipeRepository {
   async searchRecipes(

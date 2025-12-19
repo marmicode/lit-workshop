@@ -1,4 +1,4 @@
-import { createRecipe, Recipe } from './recipe';
+import { createRecipe, Recipe } from './recipe.js';
 
 class RecipeMother {
   private _recipePictures = [

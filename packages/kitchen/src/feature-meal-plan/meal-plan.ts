@@ -1,10 +1,9 @@
+import { mealPlannerSingleton } from '@kitchen/domain';
+import '@kitchen/ui';
+import { assertNonNullable, RxSubscribeController } from '@kitchen/util';
 import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { mealPlannerSingleton } from './meal-planner';
-import './recipe-preview';
-import { RxSubscribeController } from './rx-subscribe.controller';
-import { assertNonNullable } from './util';
 
 @customElement('wm-meal-plan')
 export class MealPlan extends LitElement {

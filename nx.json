@@ -73,5 +73,23 @@
       "e2eTestRunner": "none"
     }
   },
+  "release": {
+    "projects": ["packages/*"],
+    "projectsRelationship": "independent",
+    "changelog": {
+      "projectChangelogs": {
+        "file": "{projectRoot}/CHANGELOG.md",
+        "renderer": "nx/release/changelog-renderer"
+      }
+    },
+    "version": {
+      "conventionalCommits": true
+    },
+    "git": {
+      "commit": true,
+      "tag": true,
+      "commitMessage": "release: 🚀 publish {version}"
+    }
+  },
   "defaultProject": "demo"
 }

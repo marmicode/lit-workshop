@@ -6,7 +6,8 @@
   "scripts": {
     "analyze": "nx analyze",
     "cook": "node --experimental-strip-types tools/cook/main.ts",
-    "start": "nx dev"
+    "start": "nx dev",
+    "release": "nx release"
   },
   "private": true,
   "dependencies": {

@@ -1,6 +1,5 @@
 ---
-sidebar_label: 📋 Cheatsheet
-sidebar_position: 0
+sidebar_label: Cheatsheet
 ---
 
 # Lit Cheatsheet
